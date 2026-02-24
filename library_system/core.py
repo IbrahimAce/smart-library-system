@@ -1,5 +1,6 @@
 from .utils import track_access, permission_check
 
+
 class Book:
     def __init__(self, title, author, pages):
         self.title = title
@@ -17,6 +18,7 @@ class Book:
         if isinstance(other, Book):
             return self.title == other.title and self.author == other.author
         return False
+
 
 class Library:
     def __init__(self):
