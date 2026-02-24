@@ -1,3 +1,5 @@
+from .utils import track_access, permission_check
+
 class Book:
     def __init__(self, title, author, pages):
         self.title = title
@@ -20,9 +22,11 @@ class Library:
     def __init__(self):
         self.books = []
 
-    def add_book(self, book):
+    @permission_check("Admin")
+    def add_book(self, book, user_role=None):
         self.books.append(book)
 
+    @track_access
     def borrow_book(self, title):
         for book in self.books:
             if book.title == title and not book.is_borrowed:
@@ -30,6 +34,7 @@ class Library:
                 return book
         raise ValueError(f"Book '{title}' not available.")
 
+    @track_access
     def return_book(self, title):
         for book in self.books:
             if book.title == title and book.is_borrowed:
